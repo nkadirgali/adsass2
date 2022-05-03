@@ -90,26 +90,22 @@ public class MyHashTable<K extends Comparable<K>, V extends Comparable<V>> {
     }
     public boolean contains(V value){
         MyNode<K, V> node;
-        for(int i=0,j=0;i<capacity;i++){
+        for(int i=0;i<capacity;i++){
             node=buckets[i];
             while(node!=null){
                 if(node.value==value) return true;
                 node=node.next;
-                j++;
-                if(j>length) return false;
             }
         }
         return false;
     }
     public K getKey(V value){
         MyNode<K, V> node;
-        for(int i=0,j=0;i<capacity;i++){
+        for(int i=0;i<capacity;i++){
             node=buckets[i];
             while(node!=null){
                 if(node.value==value) return node.key;
                 node=node.next;
-                j++;
-                if(j>length) return null;
             }
         }
         return null;
