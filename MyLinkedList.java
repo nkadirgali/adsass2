@@ -1,4 +1,16 @@
-public class MyLinkedList<T extends Comparable<T>> implements MyList<Object> {
+import java.util.Iterator;
+
+public class MyLinkedList<T extends Comparable<T>> implements MyList<Object>, Iterator<T> {
+    @Override
+    public boolean hasNext() {
+        return head!=null;
+    }
+
+    @Override
+    public T next() {
+        return (T) remove(0);
+    }
+
     private static class MyNode<Object>{
         Object data;
         MyNode<Object> next, prev;
@@ -173,5 +185,12 @@ public class MyLinkedList<T extends Comparable<T>> implements MyList<Object> {
         head=null;
         length=0;
     }
-
+    public void print(){
+        MyNode<Object> node=head;
+        while (node!=null){
+            System.out.print(node.data+" ");
+            node=node.next;
+        }
+        System.out.println();
+    }
 }
