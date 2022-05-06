@@ -15,21 +15,20 @@ public class MyHashTable<K extends Comparable<K>, V extends Comparable<V>> {
     private MyNode<K, V>[] buckets;
 
     public MyHashTable(){
-        buckets=new MyNode[capacity];
+        buckets = new MyNode[capacity];
     }
     public MyHashTable(int initialCapacity){
-        capacity= (int)(initialCapacity*loadFactor);
-        buckets=new MyNode[capacity];
+        capacity = (int)(initialCapacity*loadFactor);
+        buckets = new MyNode[capacity];
     }
     public void put(K key, V value){
         int index=hash(key.hashCode());
         MyNode<K,V> newNode = new MyNode<>(key,value);
-        if(buckets[index]==null){
-            buckets[index]=newNode;
-        }else{
+//        System.out.println("Index = "+index+" Value = "+value+" Key hashCode = " + key.hashCode());
+        if(buckets[index]!=null){
             newNode.next=buckets[index];
-            buckets[index]=newNode;
         }
+        buckets[index]=newNode;
         length++;
     }
     public V get(K key){
@@ -110,8 +109,19 @@ public class MyHashTable<K extends Comparable<K>, V extends Comparable<V>> {
         }
         return null;
     }
+    public void print(){
+        MyNode<K,V> it;
+        for(int i=0;i<capacity;i++){
+            System.out.print(i+" - ");
+            for(it=buckets[i];it!=null;it=it.next){
+                System.out.print(it.key);
+                if(it.next!=null) System.out.print(" -> ");
+            }
+            System.out.println();
+        }
+    }
 
     private int hash(int hashCode){
-        return (hashCode*0x7fffffff)%capacity;
+        return (hashCode & 0x7fffffff)%capacity;
     }
 }
