@@ -1,15 +1,30 @@
-public class MyBST<K extends Comparable<K>, V> {
+import java.util.Iterator;
+
+public class MyBST<K extends Comparable<K>, V> implements Iterable<K> {
     private MyNode<K,V> root;
+
     private class MyNode<K,V>{
         private K key;
         private V value;
         private MyNode left,right;
+        private int length = 1;
         public MyNode(K key, V value){
             this.key=key;
             this.value=value;
         }
+
+        @Override
+        public String toString() {
+            return "{key=" + key +
+                    ", value=" + value +
+                    '}';
+        }
     }
 
+    public int size(){return size(root);}
+    private int size(MyNode<K,V> node){
+        return node==null ? 0 : node.length;
+    }
     public void put(K key,V value){
         root=insert(new MyNode<>(key, value),root);
     }
@@ -19,7 +34,10 @@ public class MyBST<K extends Comparable<K>, V> {
             node.left=insert(newNode,node.left);
         }else if(newNode.key.compareTo(node.key)>0){
             node.right=insert(newNode,node.right);
+        }else{
+            node.value= newNode.value;
         }
+        node.length=size(node.left)+size(node.right)+1;
         return node;
     }
     public V get(K key){
@@ -52,21 +70,33 @@ public class MyBST<K extends Comparable<K>, V> {
         }
         return node;
     }
-    public MyQueue<K> keys(){
-        MyQueue<K> q = new MyQueue<>();
+    public void print(){
+        print(root);
+    }
+    public void print(MyNode<K,V> node){
+        if(node!=null){
+            print(node.left);
+            System.out.println(node.toString());
+            print(node.right);
+        }
+    }
+    public MyLinkedList<K> keys(){
+        MyLinkedList<K> q = new MyLinkedList<>();
         inorder(root,q);
         return q;
     }
-    private void inorder(MyNode<K,V> node,MyQueue<K> q){
+    private void inorder(MyNode<K,V> node,MyLinkedList<K> q){
         if(node!=null){
             inorder(node.left,q);
-            q.enqueue(node.key);
+            q.add(node.key);
             inorder(node.right,q);
         }
     }
-//    public Iterable<K> iterator(){
-//
-//    }
+
+    public Iterator<K> iterator(){
+        Iterator<K> q = keys();
+        return q;
+    }
     public boolean isEmpty(){return root==null;}
     public V getMin(){
         if(isEmpty()){
