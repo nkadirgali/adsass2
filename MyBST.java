@@ -21,6 +21,8 @@ public class MyBST<K extends Comparable<K>, V> implements Iterable<K> {
         }
     }
 
+//    public MyBST(){root=null;}
+
     public int size(){return size(root);}
     private int size(MyNode<K,V> node){
         return node==null ? 0 : node.length;
@@ -40,7 +42,7 @@ public class MyBST<K extends Comparable<K>, V> implements Iterable<K> {
         node.length=size(node.left)+size(node.right)+1;
         return node;
     }
-    public V get(K key){
+    public V get(K key) {
         if(isEmpty()) return null;
         MyNode<K,V> node=root;
         while (node!=null){
@@ -48,7 +50,10 @@ public class MyBST<K extends Comparable<K>, V> implements Iterable<K> {
             if(key.compareTo(node.key)<0) node=node.left;
             else node=node.right;
         }
-        return node.value;
+        if(node==null) {
+            System.out.println("There is no such key");
+        }
+        return node==null ? null : node.value;
     }
     public void delete(K key){
         root=delete(key,root);
@@ -73,7 +78,7 @@ public class MyBST<K extends Comparable<K>, V> implements Iterable<K> {
     public void print(){
         print(root);
     }
-    public void print(MyNode<K,V> node){
+    private void print(MyNode<K,V> node){
         if(node!=null){
             print(node.left);
             System.out.println(node.toString());
