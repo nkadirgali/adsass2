@@ -21,6 +21,11 @@ public class MyHashTable<K extends Comparable<K>, V extends Comparable<V>> {
         capacity = (int)(initialCapacity*loadFactor);
         buckets = new MyNode[capacity];
     }
+    public MyHashTable(int initialCapacity,float loadFactor){
+        this.loadFactor=loadFactor;
+        capacity= (int) (initialCapacity*loadFactor);
+        buckets=new MyNode[capacity];
+    }
     public void put(K key, V value){
         int index=hash(key.hashCode());
         MyNode<K,V> newNode = new MyNode<>(key,value);
