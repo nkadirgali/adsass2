@@ -13,7 +13,7 @@ public class MyStack<T extends Comparable<T>> {
         return list.size();
     }
 
-    public T peek(){
+    public T peek() {
         return (T) list.get(0);
     }
 
